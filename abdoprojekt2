@@ -1,0 +1,28 @@
+python tools/infer_video.py \
+    --cfg configs/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml \
+    --output-dir output_directory \
+    --image-ext mp4 \
+	--wts https://dl.fbaipublicfiles.com/detectron/37698009/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml.08_45_57.YkrJgP6O/output/train/keypoints_coco_2014_train:keypoints_coco_2014_valminusminival/generalized_rcnn/model_final.pkl \
+    input_directory
+
+
+------------------------------------------------------------------------------------------------
+etape1 :
+
+
+python detectron/tools/infer_video.py \
+    --cfg detectron/configs/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml \
+    --output-dir output_test \
+    --image-ext mp4 \
+	--wts https://dl.fbaipublicfiles.com/detectron/37698009/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml.08_45_57.YkrJgP6O/output/train/keypoints_coco_2014_train:keypoints_coco_2014_valminusminival/generalized_rcnn/model_final.pkl \
+    test
+
+
+etape2: Preparedata
+
+python prepare_data_2d_custom.py -i output_test  -o aarab1515
+
+etape3: show
+
+python run.py -d custom -k lauf -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject lauf.mp4 --viz-action custom --viz-camera 0 --viz-video /home/developer/Downloads/VideoPose3D-master/test/lauf.mp4  --viz-output outputtestlauf54.mp4 --viz-size 6
+
